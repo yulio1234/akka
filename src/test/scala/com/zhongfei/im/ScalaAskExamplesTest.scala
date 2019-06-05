@@ -2,14 +2,12 @@ package com.zhongfei.im
 
 import java.util.concurrent.TimeUnit
 
-import akka.actor.Status.Success
-import akka.actor.{ActorRef, ActorSystem, Props, Status}
+import akka.actor.{ActorRef, ActorSystem, Props}
 import akka.pattern.ask
 import akka.util.Timeout
 import org.scalatest.{FunSpecLike, Matchers}
 
-import scala.concurrent.{Await, Future}
-import scala.concurrent.duration._
+import scala.concurrent.Future
 import scala.util.Failure
 
 /**

@@ -1,6 +1,6 @@
 package com.zhongfei.im
 
-import akka.actor.{Actor, ActorLogging}
+import akka.actor.{Actor, ActorLogging, Status}
 
 import scala.collection.mutable
 
@@ -15,7 +15,14 @@ class AkkademyDb extends Actor with ActorLogging{
     case SetRequest(key,value) =>{
       log.info("received SetRequest - key :{}: value :{}",key,value)
       map.put(key,value)
+      sender() ! Status.Success
     }
-    case o => log.info("received unknown message:{}",o);
+    case GetRequest(key) =>
+      val response = map.get(key)
+      response match {
+        case Some(x) => sender() ! x
+        case _ => Status.Failure(new KeyNotFoundException(key))
+      }
+    case _ => Status.Failure(new ClassNotFoundException);
   }
 }
